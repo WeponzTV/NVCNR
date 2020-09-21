@@ -8,3 +8,5 @@ IMPORTANT: The following directories must be created in 'scriptfiles/NVCNR':
 - Styles
 - Users
 - Vehicles
+
+For more details visit: https://forum.sa-mp.com/showthread.php?t=463657
