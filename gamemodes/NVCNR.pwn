@@ -1,11 +1,10 @@
 //New Vegas Cops and Robbers(NVCNR) - v2.3 - by Weponz 2010-2012
 #include <a_samp>//Credits to SA:MP dev team
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 51
+#define MAX_PLAYERS 40
 #include <YSI\y_ini>//Credits to Y_Less
 #include <zcmd>//Credits to ZeeX
 #include <sscanf2>//Credits to Y_Less
-#include <foreach>//Credits to Y_Less
 #include <streamer>//Credits to Incognito
 #include <CheckpointManager>//Credits to João Pedro Lopes
 #include <GetVehicleColor>//Credits to RyDeR`
@@ -1725,7 +1724,7 @@ stock CheckValidSkinID(skinid)
 stock GetClosestPlayerID(playerid)
 {
 	new Float:range = 5.0;
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
         if(playerid == i) continue;
         new Float:x, Float:y, Float:z;
@@ -1784,7 +1783,7 @@ stock IsNumeric(string[])//Credits to DracoBlue
 stock GetPlayersInTeamFromMaxPlayers(teamid)
 {
     new count = 0;
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
         if(GetPlayerState(i) == PLAYER_STATE_NONE) continue;
         if(GetTeam{i} != teamid) continue;
@@ -1806,7 +1805,7 @@ stock Float:GetPosBehindOfPlayer(playerid, &Float:x, &Float:y, Float:distance)//
 
 stock GetID(username[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
     	if(IsPlayerConnected(i))
     	{
@@ -2534,7 +2533,7 @@ stock SaveBankStats(playerid)
 
 stock CopRadio(color,const string[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(GetPlayerState(i) != PLAYER_STATE_NONE)
 		{
@@ -2550,7 +2549,7 @@ stock CopRadio(color,const string[])
 
 stock MedicRadio(color,const string[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(GetPlayerState(i) != PLAYER_STATE_NONE)
 		{
@@ -2565,7 +2564,7 @@ stock MedicRadio(color,const string[])
 
 stock MechanicRadio(color,const string[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(GetPlayerState(i) != PLAYER_STATE_NONE)
 		{
@@ -2580,7 +2579,7 @@ stock MechanicRadio(color,const string[])
 
 stock DealerRadio(color,const string[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(GetPlayerState(i) != PLAYER_STATE_NONE)
 		{
@@ -2595,7 +2594,7 @@ stock DealerRadio(color,const string[])
 
 stock SendAdminMessage(color,const astring[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(GetPlayerState(i) != PLAYER_STATE_NONE)
 		{
@@ -2614,7 +2613,7 @@ stock SendAdminMessage(color,const astring[])
 
 stock SendVIPMessage(color,const astring[])
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(GetPlayerState(i) != PLAYER_STATE_NONE)
 		{
@@ -2834,7 +2833,7 @@ stock DisplayGroupMembers(groupid, playerid)
     format(string, sizeof(string), "%s (%d):", GroupInfo[groupid][grname], groupid);
 	SendClientMessage(playerid, ORANGE, string);
 	string = "";
-	foreach(Player, x)
+	for(new x = 0; x < MAX_PLAYERS; x++)
 	{
 	    if(IsPlayerConnected(x) && pGroupInfo[x][gid] == groupid)
 	    {
@@ -2979,7 +2978,7 @@ stock GroupMembers(groupid)
 {
     if(!GroupInfo[groupid][active]) return 0;
 	new groupmembers;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(IsPlayerConnected(i) && pGroupInfo[i][gid] == groupid) groupmembers++;
 	}
@@ -2988,7 +2987,7 @@ stock GroupMembers(groupid)
 
 stock ChangeMemberOrder(groupid, orderid)
 {
-	foreach(Player, x)
+	for(new x = 0; x < MAX_PLAYERS; x++)
 	{
 		if(pGroupInfo[x][gid] != groupid || pGroupInfo[x][order] < orderid) continue;
 		pGroupInfo[x][order] --;
@@ -3007,7 +3006,7 @@ stock ChangeMemberOrder(groupid, orderid)
 stock SendMessageToAllGroupMembers(groupid, message[])
 {
 	if(!GroupInfo[groupid][active]) return 0;
-	foreach(Player, x)
+	for(new x = 0; x < MAX_PLAYERS; x++)
 	{
 		if(pGroupInfo[x][gid] == groupid) SendClientMessage(x, ORANGE, message);
 	}
@@ -3032,7 +3031,7 @@ stock IsPlayerHoldingAGun(playerid)
 
 stock GetVehicleDriverID(vehicleid)
 {
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
         if(GetPlayerState(i) != PLAYER_STATE_DRIVER) continue;
         if(GetPlayerVehicleID(i) == vehicleid)
@@ -3061,7 +3060,7 @@ stock IsPlayerInOwnedVehicle(playerid, vehicleid)
 stock IsPlayerNearLawEnforcement(playerid)
 {
 	new Float:cPos[3], Float:range = 100.0;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(GetTeam{i} == CLASS_CIV || GetTeam{i} == CLASS_MEDIC) continue;
 	    GetPlayerPos(i, cPos[0], cPos[1], cPos[2]);
@@ -3437,7 +3436,7 @@ public OnGameModeInit()
 	SendRconCommand("mapname New Vegas");
     SetGameModeText("Cops And Robbers");
 	
-    ConnectNPC("Elvis", "elvis");
+    //ConnectNPC("Elvis", "elvis");
 
 	Loop(h, MAX_HOUSES)
 	{
@@ -3485,7 +3484,7 @@ public OnGameModeInit()
 		BomberStage{p} = 0;
 	}
 
-	foreach(Player, r)
+	for(new r = 0; r < MAX_PLAYERS; r++)
 	{
 	    pGroupInfo[r][gid] = -1;
 		pGroupInfo[r][order] = -1;
@@ -4929,7 +4928,7 @@ public OnGameModeExit()
         SaveBizStats(b);
     }
     
-    foreach(Player, p)
+    for(new p = 0; p < MAX_PLAYERS; p++)
     {
     	if(IsPlayerConnected(p) && IsLoggedIn{p} == 1)
 		{
@@ -4941,7 +4940,7 @@ public OnGameModeExit()
  	}
 
     /*new hfile[40], tmp;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    tmp = GetPVarInt(i, "LastHouseCP");
 		format(hfile, sizeof(hfile), HOUSE_FILE, tmp);
@@ -6067,7 +6066,7 @@ public OnPlayerDisconnect(playerid, reason)
 stock GetIPCount(ip[])//Anti-BOT Attack (BETA)
 {
     new ip_check[50], ip_count = 0;
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		GetPlayerIp(i, ip_check, sizeof(ip_check));
 		if(!strcmp(ip_check, ip))
@@ -17072,7 +17071,7 @@ public ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
         new Float:oldposx, Float:oldposy, Float:oldposz;
         new Float:tempposx, Float:tempposy, Float:tempposz;
         GetPlayerPos(playerid, oldposx, oldposy, oldposz);
-        foreach(Player, i)
+        for(new i = 0; i < MAX_PLAYERS; i++)
         {
             if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(i) && GetPlayerInterior(playerid) == GetPlayerInterior(i))
             {
@@ -17112,7 +17111,7 @@ public ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 
 public SetVehicleParamsForAll(carid,objective,doorslocked)
 {
-	foreach(Player, i) { SetVehicleParamsForPlayer(carid,i,objective,doorslocked); }
+	for(new i = 0; i < MAX_PLAYERS; i++) { SetVehicleParamsForPlayer(carid,i,objective,doorslocked); }
 }
 
 public OnVehicleStreamIn(vehicleid, forplayerid)
@@ -17348,7 +17347,7 @@ public Update_Zones()
 {
 	new line1[10];
 	new line2[10];
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	  	if(ZoneUpdates[i] == 1)
 	  	{
@@ -18278,7 +18277,7 @@ public RestartServer()
 public StartCountDown()
 {
 	CountStatus = 1;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent[i] == 1)
 	    {
@@ -18292,7 +18291,7 @@ public StartCountDown()
 public CountDownStage1()
 {
 	CountStatus = 1;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent[i] == 1)
 	    {
@@ -18306,7 +18305,7 @@ public CountDownStage1()
 public CountDownStage2()
 {
 	CountStatus = 1;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent[i] == 1)
 	    {
@@ -18320,7 +18319,7 @@ public CountDownStage2()
 public CountDownStage3()
 {
 	CountStatus = 1;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent[i] == 1)
 	    {
@@ -18333,7 +18332,7 @@ public CountDownStage3()
 
 public FinishCountDown()
 {
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent[i] == 1)
 	    {
@@ -18993,7 +18992,7 @@ CMD:hits(playerid, params[])
 {
     new count = 0;
     if(GetTeam{playerid} != CLASS_CIV) return SendClientMessage(playerid, RED, "Only civilians can view the hit list.");
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
 	    if(HasHit[i] > 0)
 	    {
@@ -19337,7 +19336,7 @@ CMD:cuff(playerid, params[])
     if(GetTeam{playerid} == CLASS_CIV || GetTeam{playerid} == CLASS_MEDIC) return SendClientMessage(playerid, RED, "Only law enforcement can cuff players.");
 	if(HasBeenTied{playerid} == true) return SendClientMessage(playerid, RED, "You cant cuff players while your tied up.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, RED, "You cant cuff players from a vehicle.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(i == playerid) continue;
 	    new Float:x, Float:y, Float:z;
@@ -19412,7 +19411,7 @@ CMD:cf(playerid, params[])
     if(GetTeam{playerid} == CLASS_CIV || GetTeam{playerid} == CLASS_MEDIC) return SendClientMessage(playerid, RED, "Only law enforcement can cuff players.");
 	if(HasBeenTied{playerid} == true) return SendClientMessage(playerid, RED, "You cant cuff players while your tied up.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, RED, "You cant cuff players from a vehicle.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(i == playerid) continue;
 	    new Float:x, Float:y, Float:z;
@@ -19487,7 +19486,7 @@ CMD:taze(playerid, params[])
     if(GetTeam{playerid} == CLASS_CIV || GetTeam{playerid} == CLASS_MEDIC) return SendClientMessage(playerid, RED, "Only law enforcement can taze players.");
 	if(HasBeenTied{playerid} == true) return SendClientMessage(playerid, RED, "You cant taze players while your tied up.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, RED, "You cant taze players from a vehicle.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(i == playerid) continue;
 	    new Float:x, Float:y, Float:z;
@@ -19564,7 +19563,7 @@ CMD:tz(playerid, params[])
     if(GetTeam{playerid} == CLASS_CIV || GetTeam{playerid} == CLASS_MEDIC) return SendClientMessage(playerid, RED, "Only law enforcement can taze players.");
 	if(HasBeenTied{playerid} == true) return SendClientMessage(playerid, RED, "You cant taze players while your tied up.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, RED, "You cant taze players from a vehicle.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(i == playerid) continue;
 	    new Float:x, Float:y, Float:z;
@@ -19678,7 +19677,7 @@ CMD:tk(playerid, params[])
     if(GetTeam{playerid} == CLASS_CIV || GetTeam{playerid} == CLASS_MEDIC) return SendClientMessage(playerid, RED, "Only law enforcement can ticket players.");
 	if(HasBeenTied{playerid} == true) return SendClientMessage(playerid, RED, "You cant ticket players while your tied up.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, RED, "You cant ticket players from a vehicle.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(i == playerid) continue;
 	    new Float:x, Float:y, Float:z;
@@ -19752,7 +19751,7 @@ CMD:ar(playerid, params[])
     if(GetTeam{playerid} == CLASS_CIV || GetTeam{playerid} == CLASS_MEDIC) return SendClientMessage(playerid, RED, "Only law enforcement can arrest players.");
 	if(HasBeenTied{playerid} == true) return SendClientMessage(playerid, RED, "You cant arrest players while your tied up.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, RED, "You cant arrest players from a vehicle.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(i == playerid) continue;
 	    new Float:x, Float:y, Float:z;
@@ -22812,7 +22811,7 @@ CMD:a(playerid, params[])
 	if(IsPlayerAdmin(playerid))
 	{
         format(fstr, sizeof(fstr), "[ADMIN-CHAT]: %s: %s", GetName(playerid), params);
-        foreach(Player, i)
+        for(new i = 0; i < MAX_PLAYERS; i++)
 		{
             if(PlayerInfo[i][aLevel] >= 1 || IsPlayerAdmin(i))
 			{
@@ -22823,7 +22822,7 @@ CMD:a(playerid, params[])
     else if(PlayerInfo[playerid][aLevel] >= 1)
 	{
         format(fstr, sizeof(fstr), "[ADMIN-CHAT]: %s: %s", GetName(playerid), params);
-        foreach(Player, i)
+        for(new i = 0; i < MAX_PLAYERS; i++)
 		{
             if(PlayerInfo[i][aLevel] >= 1)
 			{
@@ -24430,7 +24429,7 @@ CMD:mutelist(playerid, params[])
 {
     if(PlayerInfo[playerid][aLevel] < 1) return SendClientMessage(playerid, RED, "Only admin level 1+ can use this command.");
     new mutedplayers = 0;
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
         if(IsPlayerConnected(i))
         {
@@ -24657,7 +24656,7 @@ CMD:admins(playerid, params[])
 {
     new OnlineAdmins = 0;
     new Rank[24];
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
         if(IsPlayerConnected(i))
         {
@@ -24711,7 +24710,7 @@ CMD:celllist(playerid, params[])
     if(IsInCellCP{playerid} == false) return SendClientMessage(playerid, RED, "You must be at a jail cell to use this command.");
     if(IsInCellCP1{playerid} == true)
     {
-    	foreach(Player, i)
+    	for(new i = 0; i < MAX_PLAYERS; i++)
     	{
         	if(IsPlayerConnected(i))
         	{
@@ -24730,7 +24729,7 @@ CMD:celllist(playerid, params[])
 	}
 	else if(IsInCellCP2{playerid} == true)
     {
-    	foreach(Player, i)
+    	for(new i = 0; i < MAX_PLAYERS; i++)
     	{
         	if(IsPlayerConnected(i))
         	{
@@ -24749,7 +24748,7 @@ CMD:celllist(playerid, params[])
 	}
 	else if(IsInCellCP3{playerid} == true)
     {
-    	foreach(Player, i)
+    	for(new i = 0; i < MAX_PLAYERS; i++)
     	{
         	if(IsPlayerConnected(i))
         	{
@@ -24768,7 +24767,7 @@ CMD:celllist(playerid, params[])
 	}
 	else if(IsInCellCP4{playerid} == true)
     {
-    	foreach(Player, i)
+    	for(new i = 0; i < MAX_PLAYERS; i++)
     	{
         	if(IsPlayerConnected(i))
         	{
@@ -24787,7 +24786,7 @@ CMD:celllist(playerid, params[])
 	}
 	else if(IsInCellCP5{playerid} == true)
     {
-    	foreach(Player, i)
+    	for(new i = 0; i < MAX_PLAYERS; i++)
     	{
         	if(IsPlayerConnected(i))
         	{
@@ -24806,7 +24805,7 @@ CMD:celllist(playerid, params[])
 	}
 	else if(IsInCellCP6{playerid} == true)
     {
-    	foreach(Player, i)
+    	for(new i = 0; i < MAX_PLAYERS; i++)
     	{
         	if(IsPlayerConnected(i))
         	{
@@ -24830,7 +24829,7 @@ CMD:viplist(playerid, params[])
 {
     new OnlineVIPs = 0;
     new Rank[24];
-    foreach(Player, i)
+    for(new i = 0; i < MAX_PLAYERS; i++)
     {
         if(IsPlayerConnected(i))
         {
@@ -25276,7 +25275,7 @@ CMD:eventvehs(playerid, params[])
     if(vehid < 400 || vehid > 611) return SendClientMessage(playerid, RED, "Invalid vehicle id.");
 	if(HasEventStarted == 0 || HasMadeEvent{playerid} == 0) return SendClientMessage(playerid,RED, "Your not holding any events to control.");
 	if(CantJoinEvent == 0) return SendClientMessage(playerid,RED, "You need to stop joins before you can use this command.");
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent{i} == 1)
 	    {
@@ -25333,7 +25332,7 @@ CMD:finishevent(playerid, params[])
     if(HasEventStarted == 0) return SendClientMessage(playerid, RED, "Your not holding any events to control.");
     if(HasMadeEvent{playerid} == 0) return SendClientMessage(playerid, RED, "You cant control this event.");
     {
-        foreach(Player, i)
+        for(new i = 0; i < MAX_PLAYERS; i++)
 	    {
             if(IsAtEvent{i} == 1)
 	        {
@@ -25361,7 +25360,7 @@ CMD:armevent(playerid, params[])
     if(HasEventStarted == 0) return SendClientMessage(playerid, RED, "Your not holding any events to control.");
     if(HasMadeEvent{playerid} == 0) return SendClientMessage(playerid, RED, "You cant control this event.");
     {
-        foreach(Player, i)
+        for(new i = 0; i < MAX_PLAYERS; i++)
 	    {
             if(IsAtEvent{i} == 1)
 	        {
@@ -25381,7 +25380,7 @@ CMD:countdown(playerid, params[])
 	if(CountStatus == 1) return SendClientMessage(playerid, RED, "A countdown is in progress, please wait.");
 	SetTimer("StartCountDown", 1000, false);
 	IsAtEvent[playerid] = 1;
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 	    if(IsAtEvent[i] == 1)
 	    {
@@ -25397,7 +25396,7 @@ CMD:disarmevent(playerid, params[])
     if(HasEventStarted == 0) return SendClientMessage(playerid, RED, "Your not holding any events to control.");
     if(HasMadeEvent{playerid} == 0) return SendClientMessage(playerid, RED, "You cant control this event.");
     {
-        foreach(Player, i)
+        for(new i = 0; i < MAX_PLAYERS; i++)
 	    {
             if(IsAtEvent{i} == 1)
 	        {
@@ -25717,7 +25716,7 @@ CMD:restart(playerid, params[])
     	GameTextForAll("~w~Server ~r~Restarting ~w~In ~r~10 Secs...", 5000, 5);
     	SendClientMessageToAll(WHITE, "Elvis: The server will automatically restart in 10 secs.");
     	SendClientMessageToAll(YELLOW, "NOTE: Your stats have just been saved.");
-		foreach(Player, i)
+		for(new i = 0; i < MAX_PLAYERS; i++)
 		{
 			if(IsPlayerConnected(i) && IsLoggedIn{i} == 1)
 			{
@@ -28361,7 +28360,7 @@ task LotteryDraw[600000]()
 	MakeNumber();
 	new Winnings[MAX_PLAYERS];
 
-	foreach(Player, i)
+	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(HasLotteryTicket{i} == 1)
 		{
