@@ -8,7 +8,7 @@ REQUIREMENTS:
 - <a href="https://github.com/YSI-Coding/y_timers/blob/dev/YSI-Coding/y_timers.inc">y_timers.inc</a>
 - <a href="https://pastebin.com/XrWYmD5b">zcmd.inc</a>
 
-IMPORTANT: The following directories must be created in 'scriptfiles/NVCNR':
+IMPORTANT: The following folders must be created in 'scriptfiles/NVCNR':
 - Bank
 - Businesses
 - Degrees
